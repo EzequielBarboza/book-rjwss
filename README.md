@@ -7,3 +7,6 @@ Change the wildfly execution - Reference: https://docs.jboss.org/wildfly/plugins
 
 
 Why you cannot use jboss-as-maven plugin: https://issues.redhat.com/browse/WFLY-3684
+
+
+Add github key to windows: https://www.pluralsight.com/guides/using-git-and-github-on-windows
