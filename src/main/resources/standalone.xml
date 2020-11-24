@@ -52,8 +52,7 @@
             <security-realm name="ApplicationRealm">
                 <server-identities>
                     <ssl>
-                        <keystore path="application.keystore" relative-to="jboss.server.config.dir" keystore-password="password"
-                                  alias="server" key-password="password" generate-self-signed-certificate-host="localhost"/>
+                        <keystore path="server.keystore" relative-to="jboss.server.config.dir" keystore-password="changeit"/>
                     </ssl>
                 </server-identities>
                 <authentication>
@@ -63,6 +62,7 @@
                 <authorization>
                     <properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
                 </authorization>
+
             </security-realm>
         </security-realms>
         <audit-log>
@@ -277,23 +277,6 @@
                     <realm name="ManagementRealm" role-decoder="groups-to-roles"/>
                     <realm name="local" role-mapper="super-user-mapper"/>
                 </security-domain>
-<!--                <security-domain name="domainDigest" cache-type="default">-->
-<!--                    <authentication>-->
-<!--                        <login-module code="UsersRoles" flag="required">-->
-<!--                            <module-option name="usersProperties"-->
-<!--                                           value="${jboss.server.config.dir}/application-users.properties"/>-->
-<!--                            <module-option name="rolesProperties"-->
-<!--                                           value="${jboss.server.config.dir}/application-roles.properties"/>-->
-<!--                            <module-option name="hashAlgorithm" value="MD5"/>-->
-<!--                            <module-option name="hashEncoding" value="RFC2617"/>-->
-<!--                            <module-option name="hashUserPassword" value="false"/>-->
-<!--                            <module-option name="hashStorePassword" value="true"/>-->
-<!--                            <module-option name="passwordIsA1Hash" value="true"/>-->
-<!--                            <module-option name="storeDigestCallback"-->
-<!--                                           value="org.jboss.security.auth.callback.RFC2617Digest"/>-->
-<!--                        </login-module>-->
-<!--                    </authentication>-->
-<!--                </security-domain>-->
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
@@ -540,6 +523,7 @@
                     statistics-enabled="${wildfly.transactions.statistics-enabled:${wildfly.statistics-enabled:false}}"/>
             <object-store path="tx-object-store" relative-to="jboss.server.data.dir"/>
         </subsystem>
+
         <subsystem xmlns="urn:jboss:domain:undertow:10.0" default-server="default-server" default-virtual-host="default-host"
                    default-servlet-container="default" default-security-domain="other"
                    statistics-enabled="${wildfly.undertow.statistics-enabled:${wildfly.statistics-enabled:false}}">
@@ -573,6 +557,13 @@
             <client-config name="Standard-Client-Config"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:weld:4.0"/>
+        <!--        <subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">-->
+        <!--            <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>-->
+        <!--            <connector name="https" protocol="HTTP/1.1" scheme="https" socket-binding="https" secure="true">-->
+        <!--                <ssl password="changeit" certificate-key-file="${jboss.server.config.dir}/server.keystore" verify-client="want"-->
+        <!--                     ca-certificate-file="${jboss.server.config.dir}/server.truststore"/>-->
+        <!--            </connector>-->
+        <!--        </subsystem>-->
     </profile>
     <interfaces>
         <interface name="management">
@@ -596,7 +587,7 @@
     </socket-binding-group>
     <deployments>
         <deployment name="a-product-idea.war" runtime-name="a-product-idea.war">
-            <content sha1="4f6b31727ac90e5731958ad24ceb9396ac1190d3"/>
+            <content sha1="97c5a25508b164bef56be22952e93024c762cd1e"/>
         </deployment>
     </deployments>
 </server>

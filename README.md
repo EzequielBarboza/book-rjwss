@@ -19,3 +19,7 @@ standalone.bat --debug 9797
 
 Test:
 curl --digest -uusername:username123! http://localhost:7080/a-product-idea/services/person/1
+
+
+Concepts:
+JSSE
